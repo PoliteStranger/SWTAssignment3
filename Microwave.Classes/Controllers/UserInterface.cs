@@ -19,7 +19,7 @@ namespace Microwave.Classes.Controllers
 
         private int powerLevel = 50;
         private int time = 1;
-
+        //Hej
         public UserInterface(
             IButton powerButton,
             IButton timeButton,
