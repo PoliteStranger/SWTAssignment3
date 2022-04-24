@@ -40,9 +40,9 @@ namespace Microwave.App
             startCancelButton.Press();
 
             // Tilføjelse: Vi tilføjer 2x 5 sekunder til tiden.
-            timeButton.Press();
+            timeButton.Press(); // 5 sek
 
-            timeButton.Press();
+            timeButton.Press(); // 5 sek
 
             // The simple sequence should now run
 
