@@ -74,6 +74,10 @@ namespace Microwave.Classes.Controllers
                     time += 1;
                     myDisplay.ShowTime(time, 0);
                     break;
+                // Tilføjelse: Når Cooking er igangværende, kan man give mere tid.
+                case States.COOKING:
+                    myCooker.UpdateTimer();
+                    break;
             }
         }
 

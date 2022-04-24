@@ -39,6 +39,11 @@ namespace Microwave.App
 
             startCancelButton.Press();
 
+            // Tilføjelse: Vi tilføjer 2x 5 sekunder til tiden.
+            timeButton.Press();
+
+            timeButton.Press();
+
             // The simple sequence should now run
 
             System.Console.WriteLine("When you press enter, the program will stop");
