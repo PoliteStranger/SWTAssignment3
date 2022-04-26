@@ -12,7 +12,7 @@ namespace Microwave.Classes.Boundary
         public PowerTube(IOutput output, int maxpower)
         {
             myOutput = output;
-            if (_maxPower < 50)
+            if (maxpower < 50)
             {
                 throw new ArgumentOutOfRangeException("Maxpower", _maxPower, "Must be at least 50");
             }

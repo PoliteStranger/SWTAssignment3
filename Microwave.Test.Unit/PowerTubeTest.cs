@@ -62,5 +62,28 @@ namespace Microwave.Test.Unit
             uut.TurnOn(50);
             Assert.Throws<System.ApplicationException>(() => uut.TurnOn(60));
         }
+
+        [TestCase(-1)]
+        [TestCase(0)]
+        [TestCase(49)]
+        public void CreateNewPowerTube_ThrowsException(int maxPower)
+        {
+
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => new PowerTube(output, maxPower));
+        }
+       
+        [TestCase(50)]
+        [TestCase(500)]
+        [TestCase(5000)]
+        public void CreateNewPowerTube_ThrowsNoException(int maxPower)
+        {
+            Assert.DoesNotThrow(() => new PowerTube(output, maxPower));
+        }
+
+
+
+
+
+
     }
 }
