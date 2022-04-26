@@ -21,6 +21,11 @@ namespace Microwave.Classes.Boundary
             timer.AutoReset = true;  // Repeatable timer
         }
 
+        // Tilføjelse: Opdatering af tiden giver 5 sek ekstra til Remaining
+        public void Update()
+        {
+            TimeRemaining += 5;
+        }
 
         public void Start(int time)
         {

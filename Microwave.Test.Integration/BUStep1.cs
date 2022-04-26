@@ -111,6 +111,19 @@ namespace Microwave.Test.Integration
             output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("00:59")));
         }
 
+        [Test]
+        public void Cookcontroller_UpdateTimer()
+        {
+            // Starter ovnen med 60 sek på uret
+            cooker.StartCooking(50, 60);
+
+            // Trykker TimeButton, så tilføjer 5 sek til tiden
+            cooker.UpdateTimer();
+
+            // Vi tester om tiden nu er opdateret til 1 min 5 sek.
+            output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("01:05")));
+        }
+
 
         #endregion
     }

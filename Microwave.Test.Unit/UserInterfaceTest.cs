@@ -194,6 +194,27 @@ namespace Microwave.Test.Unit
         }
 
         [Test]
+        public void SetTime_WhileCooking()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetTime
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            // Should call with correct values
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            cooker.Received(1).UpdateTimer();
+
+        }
+
+        [Test]
         public void Ready_PowerAndTime_CookerIsCalledCorrectly()
         {
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
