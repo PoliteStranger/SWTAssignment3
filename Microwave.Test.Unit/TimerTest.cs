@@ -126,6 +126,21 @@ namespace Microwave.Test.Unit
             Assert.That(!pause.WaitOne(2100));
         }
 
+
+        [Test]
+        public void UpdateTimer()
+        {
+            // Start timeren med 60 sek
+            uut.Start(60);
+
+            // Update bliver kaldt
+            uut.Update();   
+
+            // Så nu burde den have 5 sek mere på remaining time!
+            Assert.That(uut.TimeRemaining == 65);
+        }
+
+
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]

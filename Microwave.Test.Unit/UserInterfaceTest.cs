@@ -211,8 +211,6 @@ namespace Microwave.Test.Unit
             timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
 
             cooker.Received(1).UpdateTimer();
-            
-
 
         }
 

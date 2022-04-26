@@ -55,6 +55,9 @@ namespace Microwave.Classes.Controllers
         public void UpdateTimer()
         {
             myTimer.Update();
+
+            int remaining = myTimer.TimeRemaining;
+            myDisplay.ShowTime(remaining / 60, remaining % 60);
         }
 
         public void OnTimerExpired(object sender, EventArgs e)
