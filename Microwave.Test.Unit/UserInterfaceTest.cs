@@ -41,8 +41,8 @@ namespace Microwave.Test.Unit
                 door,
                 display,
                 light,
-                cooker,
-                buzzer);
+                cooker, 
+                buzzer,
                 700);
         }
 
@@ -389,7 +389,7 @@ namespace Microwave.Test.Unit
                 door,
                 display,
                 light,
-                cooker, maxPower));
+                cooker, buzzer, maxPower));
         }
 
         [TestCase(50)]
@@ -402,7 +402,7 @@ namespace Microwave.Test.Unit
                 door,
                 display,
                 light,
-                cooker, maxPower));
+                cooker, buzzer, maxPower));
         }
 
         [Test]
@@ -440,6 +440,7 @@ namespace Microwave.Test.Unit
         private ILight light;
 
         private ICookController cooker;
+        private IBuzzer buzzer;
 
         [SetUp]
         public void Setup()
@@ -451,13 +452,14 @@ namespace Microwave.Test.Unit
             light = Substitute.For<ILight>();
             display = Substitute.For<IDisplay>();
             cooker = Substitute.For<ICookController>();
+            buzzer = Substitute.For<IBuzzer>();
 
             uut = new UserInterface(
                 powerButton, timeButton, startCancelButton,
                 door,
                 display,
                 light,
-                cooker, 50);
+                cooker, buzzer, 50);
         }
 
 
