@@ -363,8 +363,96 @@ namespace Microwave.Test.Unit
                 cooker, maxPower));
         }
 
+        [Test]
+        public void Ready_OverPower_CookerIsCalledCorrectly()
+        {
+            for (int i = 50; i <= 1450; i += 50)
+            {
+                powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
 
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetTime
+
+            // Should call with correct values
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            cooker.Received(1).StartCooking(50, 60);
+
+        }
 
     }
 
+    [TestFixture]
+    public class UserInterfaceTestMinimumMaxPower
+    {
+        private UserInterface uut;
+
+        private IButton powerButton;
+        private IButton timeButton;
+        private IButton startCancelButton;
+
+        private IDoor door;
+
+        private IDisplay display;
+        private ILight light;
+
+        private ICookController cooker;
+
+        [SetUp]
+        public void Setup()
+        {
+            powerButton = Substitute.For<IButton>();
+            timeButton = Substitute.For<IButton>();
+            startCancelButton = Substitute.For<IButton>();
+            door = Substitute.For<IDoor>();
+            light = Substitute.For<ILight>();
+            display = Substitute.For<IDisplay>();
+            cooker = Substitute.For<ICookController>();
+
+            uut = new UserInterface(
+                powerButton, timeButton, startCancelButton,
+                door,
+                display,
+                light,
+                cooker, 50);
+        }
+
+
+        [Test]
+        public void Ready_FullPower_CookerIsCalledCorrectly()
+        {
+            for (int i = 50; i <= 50; i += 50)
+            {
+                powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetTime
+
+            // Should call with correct values
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            cooker.Received(1).StartCooking(50, 60);
+
+        }
+
+        [Test]
+        public void Ready_OverPower_CookerIsCalledCorrectly()
+        {
+            for (int i = 50; i <= 250; i += 50)
+            {
+                powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetTime
+
+            // Should call with correct values
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            cooker.Received(1).StartCooking(50, 60);
+
+        }
+    }
 }
