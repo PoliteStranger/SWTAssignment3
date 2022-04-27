@@ -38,6 +38,7 @@ namespace Microwave.Test.Unit
         [Test]
         public void StartCooking_ValidParameters_TimerUpdated()
         {
+            uut.StartCooking(50, 60);
             uut.UpdateTimer();
 
             timer.Received().Update();
