@@ -51,6 +51,19 @@ namespace Microwave.Classes.Controllers
             myTimer.Stop();
         }
 
+        // Tilføjelsen: update timer.
+        public void UpdateTimer()
+        {
+            if (isCooking)
+            {
+                myTimer.Update();
+
+                int remaining = myTimer.TimeRemaining;
+                myDisplay.ShowTime(remaining / 60, remaining % 60);
+            }
+
+        }
+
         public void OnTimerExpired(object sender, EventArgs e)
         {
             if (isCooking)

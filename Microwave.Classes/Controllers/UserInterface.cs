@@ -16,11 +16,13 @@ namespace Microwave.Classes.Controllers
         private ICookController myCooker;
         private ILight myLight;
         private IDisplay myDisplay;
+        private IBuzzer myBuzzer;
 
         private int powerLevel = 50;
         private int _maxPower;
         private int time = 1;
-
+        //Hej
+        //Hej igen
         public UserInterface(
             IButton powerButton,
             IButton timeButton,
@@ -29,6 +31,7 @@ namespace Microwave.Classes.Controllers
             IDisplay display,
             ILight light,
             ICookController cooker,
+            IBuzzer buzzer,
             int maxPower)
         {
             powerButton.Pressed += new EventHandler(OnPowerPressed);
@@ -41,7 +44,6 @@ namespace Microwave.Classes.Controllers
             myCooker = cooker;
             myLight = light;
             myDisplay = display;
-
             if (maxPower < 50)
             {
                 throw new ArgumentOutOfRangeException("Maxpower", _maxPower, "Must be at least 50");
@@ -50,6 +52,7 @@ namespace Microwave.Classes.Controllers
             {
                 _maxPower = maxPower;
             }
+            myBuzzer = buzzer;
         }
 
         private void ResetValues()
@@ -84,6 +87,10 @@ namespace Microwave.Classes.Controllers
                 case States.SETTIME:
                     time += 1;
                     myDisplay.ShowTime(time, 0);
+                    break;
+                // Tilføjelse: Når Cooking er igangværende, kan man give mere tid.
+                case States.COOKING:
+                    myCooker.UpdateTimer();
                     break;
             }
         }
@@ -160,8 +167,9 @@ namespace Microwave.Classes.Controllers
                     ResetValues();
                     myDisplay.Clear();
                     myLight.TurnOff();
-                    // Beep 3 times
                     myState = States.READY;
+                    // Beep 3 times
+                    myBuzzer.BurstBuzz(3);
                     break;
             }
         }
