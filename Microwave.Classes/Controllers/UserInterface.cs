@@ -42,7 +42,14 @@ namespace Microwave.Classes.Controllers
             myLight = light;
             myDisplay = display;
 
-            _maxPower = maxPower;
+            if (maxPower < 50)
+            {
+                throw new ArgumentOutOfRangeException("Maxpower", _maxPower, "Must be at least 50");
+            }
+            else
+            {
+                _maxPower = maxPower;
+            }
         }
 
         private void ResetValues()

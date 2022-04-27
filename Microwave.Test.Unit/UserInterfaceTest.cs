@@ -1,4 +1,5 @@
 ﻿using System;
+using Microwave.Classes.Boundary;
 using Microwave.Classes.Controllers;
 using Microwave.Classes.Interfaces;
 using NSubstitute;
@@ -334,6 +335,34 @@ namespace Microwave.Test.Unit
 
             light.Received(1).TurnOff();
         }
+
+        [TestCase(-1)]
+        [TestCase(0)]
+        [TestCase(49)]
+        public void CreateNewPowerTube_ThrowsException(int maxPower)
+        {
+
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => new UserInterface(
+                powerButton, timeButton, startCancelButton,
+                door,
+                display,
+                light,
+                cooker, maxPower));
+        }
+
+        [TestCase(50)]
+        [TestCase(500)]
+        [TestCase(5000)]
+        public void CreateNewPowerTube_ThrowsNoException(int maxPower)
+        {
+            Assert.DoesNotThrow(() => new UserInterface(
+                powerButton, timeButton, startCancelButton,
+                door,
+                display,
+                light,
+                cooker, maxPower));
+        }
+
 
 
     }
