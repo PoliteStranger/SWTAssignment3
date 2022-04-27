@@ -47,6 +47,7 @@ namespace Microwave.Test.Unit
         [Test]
         public void UpdateTimer_ShowTime()
         {
+            uut.StartCooking(50, 60);
             uut.UpdateTimer();
 
             display.Received().ShowTime(0,0);
