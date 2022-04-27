@@ -12,13 +12,15 @@ namespace Microwave.App
             Button powerButton = new Button();
             Button timeButton = new Button();
 
+            int maxMicrowavePower = 1000; //Unit is Watts
+
             Door door = new Door();
 
             Output output = new Output();
 
             Display display = new Display(output);
 
-            PowerTube powerTube = new PowerTube(output);
+            PowerTube powerTube = new PowerTube(output, maxMicrowavePower);
 
             Light light = new Light(output);
 
@@ -28,14 +30,17 @@ namespace Microwave.App
 
             CookController cooker = new CookController(timer, display, powerTube);
 
-            UserInterface ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker, buzzer);
+            UserInterface ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker, buzzer, maxMicrowavePower);
 
             // Finish the double association
             cooker.UI = ui;
 
             // Simulate a simple sequence
-
-            powerButton.Press();
+            for (int i = 0; i < 25; i++)
+            {
+                powerButton.Press();
+            }
+            
 
             timeButton.Press();
 

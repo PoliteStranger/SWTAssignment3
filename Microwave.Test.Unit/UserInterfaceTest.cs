@@ -1,4 +1,5 @@
 ﻿using System;
+using Microwave.Classes.Boundary;
 using Microwave.Classes.Controllers;
 using Microwave.Classes.Interfaces;
 using NSubstitute;
@@ -40,8 +41,9 @@ namespace Microwave.Test.Unit
                 door,
                 display,
                 light,
-                cooker,
-                buzzer);
+                cooker, 
+                buzzer,
+                700);
         }
 
         [Test]
@@ -376,7 +378,125 @@ namespace Microwave.Test.Unit
             light.Received(1).TurnOff();
         }
 
+        [TestCase(-1)]
+        [TestCase(0)]
+        [TestCase(49)]
+        public void CreateNewPowerTube_ThrowsException(int maxPower)
+        {
+
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => new UserInterface(
+                powerButton, timeButton, startCancelButton,
+                door,
+                display,
+                light,
+                cooker, buzzer, maxPower));
+        }
+
+        [TestCase(50)]
+        [TestCase(500)]
+        [TestCase(5000)]
+        public void CreateNewPowerTube_ThrowsNoException(int maxPower)
+        {
+            Assert.DoesNotThrow(() => new UserInterface(
+                powerButton, timeButton, startCancelButton,
+                door,
+                display,
+                light,
+                cooker, buzzer, maxPower));
+        }
+
+        [Test]
+        public void Ready_OverPower_CookerIsCalledCorrectly()
+        {
+            for (int i = 50; i <= 1450; i += 50)
+            {
+                powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetTime
+
+            // Should call with correct values
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            cooker.Received(1).StartCooking(50, 60);
+
+        }
 
     }
 
+    [TestFixture]
+    public class UserInterfaceTestMinimumMaxPower
+    {
+        private UserInterface uut;
+
+        private IButton powerButton;
+        private IButton timeButton;
+        private IButton startCancelButton;
+
+        private IDoor door;
+
+        private IDisplay display;
+        private ILight light;
+
+        private ICookController cooker;
+        private IBuzzer buzzer;
+
+        [SetUp]
+        public void Setup()
+        {
+            powerButton = Substitute.For<IButton>();
+            timeButton = Substitute.For<IButton>();
+            startCancelButton = Substitute.For<IButton>();
+            door = Substitute.For<IDoor>();
+            light = Substitute.For<ILight>();
+            display = Substitute.For<IDisplay>();
+            cooker = Substitute.For<ICookController>();
+            buzzer = Substitute.For<IBuzzer>();
+
+            uut = new UserInterface(
+                powerButton, timeButton, startCancelButton,
+                door,
+                display,
+                light,
+                cooker, buzzer, 50);
+        }
+
+
+        [Test]
+        public void Ready_FullPower_CookerIsCalledCorrectly()
+        {
+            for (int i = 50; i <= 50; i += 50)
+            {
+                powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetTime
+
+            // Should call with correct values
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            cooker.Received(1).StartCooking(50, 60);
+
+        }
+
+        [Test]
+        public void Ready_OverPower_CookerIsCalledCorrectly()
+        {
+            for (int i = 50; i <= 250; i += 50)
+            {
+                powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetTime
+
+            // Should call with correct values
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            cooker.Received(1).StartCooking(50, 60);
+
+        }
+    }
 }
