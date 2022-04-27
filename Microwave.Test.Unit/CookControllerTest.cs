@@ -44,14 +44,11 @@ namespace Microwave.Test.Unit
         }
 
         [Test]
-        public void StartCooking_ValidParameters_TimerRemaining()
+        public void UpdateTimer_ShowTime()
         {
-            timer.TimeRemaining.Returns(60);
-
             uut.UpdateTimer();
 
-            
-            display.Received().ShowTime(1,5);
+            display.Received().ShowTime(0,0);
         }
 
         [Test]
